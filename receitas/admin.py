@@ -3,10 +3,11 @@ from .models import Receita
 
 
 class ListandoReceitas(admin.ModelAdmin):
-    list_display = ('id', 'nome_receita', 'categoria')
+    list_display = ('id', 'nome_receita', 'categoria', 'publicada')
     list_display_links = ('id', 'nome_receita')
     list_filter = ('categoria', )
     search_fields = ('nome_receita', )
+    list_editable = ('publicada', )
     list_per_page = 2
 
 

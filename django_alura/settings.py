@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pessoas',
     'receitas',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -114,7 +115,13 @@ STATICFILES_DIRS = [
     Path.joinpath(BASE_DIR, 'django_alura/static')
 ]
 
+# Media
+MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
