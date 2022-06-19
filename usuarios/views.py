@@ -11,13 +11,11 @@ def login(request):
         if campo_vazio(email) or campo_vazio(senha):
             messages.error(request, 'Os campos email e senha não podem ficar em branco')
             return redirect('login')
-        print(email, senha)
         if User.objects.filter(email=email).exists():
             nome = User.objects.filter(email=email).values_list('username', flat=True).get()
             user = auth.authenticate(request, username=nome, password=senha)
             if user is not None:
                 auth.login(request, user)
-                print('Login realizado com sucesso.')
                 return redirect('dashboard')
     return render(request, 'usuarios/login.html')
 
@@ -64,7 +62,7 @@ def cadastro(request):
         user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save()
         messages.success(request, 'Cadastro realizado com sucesso')
-        return redirect('login')
+        return redirect('cadastro')
     else:
         return render(request, 'usuarios/cadastro.html')
 
@@ -101,6 +99,30 @@ def cria_receita(request):
 def deleta_receita(request, receita_id):
     receita = get_object_or_404(Receita, pk=receita_id)
     receita.delete()
+    return redirect('dashboard')
+
+
+def edita_receita(request, receita_id):
+    receita = get_object_or_404(Receita, pk=receita_id)
+    receita_a_editar = {
+        'receita': receita
+    }
+    return render(request, 'usuarios/edita_receita.html', receita_a_editar)
+
+
+def atualiza_receita(request):
+    if request.method == 'POST':
+        receita_id = request.POST['receita_id']
+        r = Receita.objects.get(pk=receita_id)
+        r.nome_receita = request.POST['nome_receita']
+        r.ingredientes = request.POST['ingredientes']
+        r.modo_preparo = request.POST['modo_preparo']
+        r.tempo_preparo = request.POST['tempo_preparo']
+        r.rendimento = request.POST['rendimento']
+        r.categoria = request.POST['categoria']
+        if 'foto_receita' in request.FILES:
+            r.foto_receita = request.FILES['foto_receita']
+        r.save()
     return redirect('dashboard')
 
 
