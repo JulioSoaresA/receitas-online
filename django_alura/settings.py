@@ -69,9 +69,9 @@ WSGI_APPLICATION = 'django_alura.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'alura_receita',
+        'NAME': 'receitas',
         'USER': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost'
     }
 }
